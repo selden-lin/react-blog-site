@@ -1,26 +1,60 @@
 import React from 'react';
-import logo from './logo.svg';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Login from './pages/Login.js';
+import Home from './pages/Home.js';
+import ViewBlog from './pages/ViewBlog.js';
+import Signup from './pages/Signup.js';
+
+import PageNav from './components/PageNav';
+
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route
+} from "react-router-dom";
+
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            navItems: ["login", "new blog", "sign up", "home"]
+        }
+    }
+    render() {
+        return (
+            <div className="App">
+                {this.context.router}
+                <Router>
+                    <div>
+                        <PageNav items={this.state.navItems}/>
+
+                        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+                        <Switch>    
+                            <Route path="/signup">
+                                <Signup />
+                            </Route>
+                            <Route path="/home">
+                                <Home />
+                            </Route>
+                            <Route path="/login">
+                                <Login />
+                            </Route>
+                            <Route path="/newblog">
+                                <ViewBlog title="" content="" summary=""/>
+                            </Route>
+                            <Route exact path="/">
+                                <Login />
+                            </Route>
+                        </Switch>
+                    </div>
+                </Router>
+            </div>
+        );
+    }
 }
 
 export default App;
