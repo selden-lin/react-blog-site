@@ -1,9 +1,15 @@
 var express = require('express');
 var router = express.Router();
+var ctrl = require('../controllers/blogControl');
 
-/* GET home page. */
+/* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.send('root: this does nothing');
 });
+
+router.post('/blog', ctrl.blogAdd);
+router.get('/blog/:id', ctrl.blogGet);
+router.put('/blog/:id', ctrl.blogEdit);
+router.delete('/blog/:id', ctrl.blogDelete);
 
 module.exports = router;
