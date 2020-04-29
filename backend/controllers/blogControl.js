@@ -1,19 +1,5 @@
-const mongoose = require('mongoose');
-const pass = "mongodb://selden:a123456@ds247944.mlab.com:47944/reactblogdb";
-mongoose.connect(pass, { useNewUrlParser: true });
-
-const conn = mongoose.connection;
-conn.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
-let blogSchema = new mongoose.Schema({
-    title: String,
-    summary: String,
-    content: String,
-    date: Date,
-    image: String
-});
-
-let blogModel = mongoose.model('blog', blogSchema);
+var blogModel = require("../models/blogModel");
+const ObjectId = require('mongodb').ObjectId;
 
 module.exports.blogAdd = function(req, res, next) {
     req.body.date = new Date(req.body.date);
@@ -29,13 +15,31 @@ module.exports.blogAdd = function(req, res, next) {
     } 
 
     newBlogInstance.save(function(err) {
-       
+        if(err) {
+            res.status = 500;
+            res.send(err);
+        } else {
+            res.status = 200;
+            res.send("done");
+        }
     });
-    res.send("done");
 };
 
 module.exports.blogGet = function(req, res, next) {
-    res.send("blog "+req.params.id);
+
+    blogModel.find({"_id": ObjectId(req.params.id)}, function(err, docs) {
+        if(err) {
+            res.status = 500;
+            res.send(err);
+        } else if(docs.length == 0) {
+            
+            res.status = 404;
+            res.send("Blog not found refresh the page");
+        } else {
+            res.status = 200;
+            res.send(docs);
+        }
+    });
 };
 
 module.exports.blogEdit = function(req, res, next) {
