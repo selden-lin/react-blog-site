@@ -26,7 +26,6 @@ module.exports.blogAdd = function(req, res, next) {
 };
 
 module.exports.blogGet = function(req, res, next) {
-
     blogModel.find({"_id": ObjectId(req.params.id)}, function(err, docs) {
         if(err) {
             res.status = 500;
@@ -43,9 +42,30 @@ module.exports.blogGet = function(req, res, next) {
 };
 
 module.exports.blogEdit = function(req, res, next) {
-    res.send("blog ");
+    blogModel.findOneAndUpdate({"_id": ObjectId(req.params.id)},
+    req.body,
+    function(err, docs) {
+        if(err) {
+            res.status = 500;
+            res.send(err);
+        } else if(docs.length == 0) {  
+            res.status = 404;
+            res.send("Blog not found refresh the page");
+        } else {
+            res.status = 200;
+            res.send(docs);
+        }
+    });
 };
 
 module.exports.blogDelete = function(req, res, next) {
-    res.send("blog ");
+    blogModel.deleteOne({"_id": ObjectId(req.params.id)}, function(err) {
+        if(err) {
+            res.status = 500;
+            res.send(err);
+        } else {
+            res.status = 200;
+            res.send("done");
+        }
+    });
 };
