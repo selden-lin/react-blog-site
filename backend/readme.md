@@ -17,7 +17,6 @@
 
 ## Blog structure in db
 - {
-    id: int,
     title: char,
     summary: char,
     content: char,

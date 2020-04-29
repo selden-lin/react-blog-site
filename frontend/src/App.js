@@ -29,11 +29,11 @@ class App extends React.Component {
                 {this.context.router}
                 <Router>
                     <div>
-                        <PageNav items={this.state.navItems}/>
+                        <PageNav items={this.state.navItems} />
 
                         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-                        <Switch>    
+                        <Switch>
                             <Route path="/signup">
                                 <Signup />
                             </Route>
@@ -44,8 +44,11 @@ class App extends React.Component {
                                 <Login />
                             </Route>
                             <Route path="/newblog">
-                                <ViewBlog title="" content="" summary=""/>
+                                <ViewBlog title="" content="" summary="" />
                             </Route>
+                            <Route path="/blog/:id" render={(props) => {
+                                return <ViewBlog id={props.match.params.id} title="" content="" summary="" />
+                            }} />
                             <Route exact path="/">
                                 <Login />
                             </Route>

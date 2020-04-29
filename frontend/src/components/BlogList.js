@@ -1,17 +1,28 @@
 import React from 'react';
+import { useParams, Link } from 'react-router-dom';
 
-function BlogList (props) {
+function BlogList(props) {
+
     let items = props.items.map((item, index) => {
-        return <li key={index}>
-            <h3>Title: {item.name}</h3>
-            <p>Summary: {item.summary}</p>
-        </li>
+        return <Link to={"/blog/"+item.id}>
+            <li key={index} className="blog-list-item">
+                <img src={require("../images/defaultBlogImg.jpg")}></img>
+
+                <div>
+                    <h3>Title: {item.title}</h3>
+                    <p>Summary: {item.summary}</p>
+                </div>
+            </li>
+        </Link>
     })
 
     return (
-        <ul>
-            {items}
-        </ul>
+        <div>
+            <br />
+            <ul>
+                {items}
+            </ul>
+        </div>
     )
 };
 

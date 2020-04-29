@@ -1,6 +1,7 @@
 import React from 'react';
 
 import BlogList from '../components/BlogList';
+import HomeLanding from '../components/HomeLanding';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -12,12 +13,14 @@ class Home extends React.Component {
         this.state = {
             blogs: [
                 {
-                    "name": "First blog",
-                    "summary": "Hey"
+                    "title": "First blog",
+                    "summary": "Hey",
+                    "id": 1
                 },
                 {
-                    "name": "Second blog",
-                    "summary": "hello again"
+                    "title": "Second blog",
+                    "summary": "hello again",
+                    "id": 2
                 }
             ]
         }
@@ -25,13 +28,16 @@ class Home extends React.Component {
     render() {
 
         return (
-            <Container>
-                <Row>
-                    <Col md={{offset:3, span:6}}>
-                        <BlogList items={this.state.blogs}></BlogList>
-                    </Col>
-                </Row>
-            </Container>
+            <div>
+                <HomeLanding/>
+                <Container>
+                    <Row>
+                        <Col>
+                            <BlogList items={this.state.blogs}></BlogList>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
         );
     }
 }
