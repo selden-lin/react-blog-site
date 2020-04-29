@@ -7,6 +7,7 @@ router.get('/', function(req, res, next) {
   res.send('root: this does nothing');
 });
 
+router.get('/blog', ctrl.blogGetAll);
 router.post('/blog', ctrl.blogAdd);
 router.get('/blog/:id', ctrl.blogGet);
 router.put('/blog/:id', ctrl.blogEdit);

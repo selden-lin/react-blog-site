@@ -6,7 +6,9 @@
 ## Routes
 - /blog
   - POST
-  - will add new blog to database
+    - will add new blog to database
+  - GET
+    - will get all blogs from db
 - /blog/:id
   - GET
     - will retrieve blog from db using id

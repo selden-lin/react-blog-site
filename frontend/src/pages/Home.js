@@ -11,22 +11,26 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            blogs: [
-                {
-                    "title": "First blog",
-                    "summary": "Hey",
-                    "id": 1
-                },
-                {
-                    "title": "Second blog",
-                    "summary": "hello again",
-                    "id": 2
-                }
-            ]
+            blogs: []
         }
     }
-    render() {
 
+    componentDidMount() {
+        fetch('http://localhost:3001/blog')
+        .then((res) => {
+            return res.json();
+        })
+        .then((data) => {
+            this.setState({
+                blogs: data
+            });
+            console.log(this.state.blogs);
+
+        })
+        .catch(console.log);
+    }
+
+    render() {
         return (
             <div>
                 <HomeLanding/>

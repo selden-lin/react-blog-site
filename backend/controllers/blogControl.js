@@ -1,6 +1,18 @@
 var blogModel = require("../models/blogModel");
 const ObjectId = require('mongodb').ObjectId;
 
+module.exports.blogGetAll = function(req, res, next) {
+    blogModel.find({}, function(err, docs) {
+        if(err) {
+            res.status = 500;
+            res.send(err);
+        } else {
+            res.status = 200;
+            res.send(docs);
+        }
+    });
+}
+
 module.exports.blogAdd = function(req, res, next) {
     req.body.date = new Date(req.body.date);
     let newBlogInstance = new blogModel(req.body);
