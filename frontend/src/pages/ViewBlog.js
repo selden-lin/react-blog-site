@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useParams } from 'react-router-dom';
+import { useParams, withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 import Alert from 'react-bootstrap/Alert';
@@ -22,8 +22,8 @@ class ViewBlog extends React.Component {
             success: false,
             errorMsg: ""
         }
-
         this.editClick = this.editClick.bind(this);
+        this.deleteClick = this.deleteClick.bind(this);
     }
 
     componentDidMount() {
@@ -46,28 +46,71 @@ class ViewBlog extends React.Component {
         }
     }
 
+    deleteClick(e) {
+        if (this.props.id !== "") {
+            if (window.confirm('Are you sure you want to delete this?')) {
+                axios.delete('http://localhost:3001/blog/' + this.props.id,
+                    {
+                        "_id": this.props.id
+                    })
+                    .then((res) => {
+                        alert("Successfully deleted");
+                        this.props.history.push("/home");
+                    })
+                    .catch((err) => {
+                        this.setState({
+                            error: true,
+                            msg: "Issue with deleting, try again or reload the page"
+                        })
+                    });
+            }
+        }
+    }
+
     editClick(e) {
-        axios.put('http://localhost:3001/blog/' + this.props.id,
-            {
-                "title": this.state.title,
-                "summary": this.state.summary,
-                "content": this.state.content,
-                "date": this.state.date,
-                "_id": this.props.id
-            })
-            .then((res) => {
-                this.setState({ 
-                    success: true,
-                    error: false,
-                    msg: "Successfully saved changes"
+        if (this.props.id === "") {
+            axios.post('http://localhost:3001/blog/',
+                {
+                    "title": this.state.title,
+                    "summary": this.state.summary,
+                    "content": this.state.content,
+                    "date": new Date(),
                 })
-            })
-            .catch((err) => {
-                this.setState({
-                    error: true,
-                    msg: "Issue with saving data try resubmitting or reloading the page"
+                .then((res) => {
+                    this.setState({
+                        success: true,
+                        error: false,
+                        msg: "Successfully saved changes"
+                    })
                 })
-            });
+                .catch((err) => {
+                    this.setState({
+                        error: true,
+                        msg: "Issue with saving data try resubmitting or reloading the page"
+                    })
+                });
+        } else {
+            axios.put('http://localhost:3001/blog/' + this.props.id,
+                {
+                    "title": this.state.title,
+                    "summary": this.state.summary,
+                    "content": this.state.content,
+                    "_id": this.props.id
+                })
+                .then((res) => {
+                    this.setState({
+                        success: true,
+                        error: false,
+                        msg: "Successfully saved changes"
+                    })
+                })
+                .catch((err) => {
+                    this.setState({
+                        error: true,
+                        msg: "Issue with saving data try resubmitting or reloading the page"
+                    })
+                });
+        }
     }
 
     render() {
@@ -92,11 +135,14 @@ class ViewBlog extends React.Component {
                                     onChange={(e) => this.setState({ content: e.target.value })} />
                             </Form.Group>
                             {
-                                (this.state.error || this.state.success )&&
-                                <Alert variant={this.state.success ? "success":"danger"}>{this.state.msg}</Alert>
+                                (this.state.error || this.state.success) &&
+                                <Alert variant={this.state.success ? "success" : "danger"}>{this.state.msg}</Alert>
                             }
-                            <Button onClick={this.editClick}>Save blog</Button>
-                            
+                            <Button variant="success" onClick={this.editClick}>Save blog</Button>
+                            {
+                                this.props.id !== "" &&
+                                <Button variant="danger" onClick={this.deleteClick}>Delete blog</Button>
+                            }
                         </Form>
                     </Col>
                 </Row>
@@ -105,4 +151,4 @@ class ViewBlog extends React.Component {
     }
 }
 
-export default ViewBlog;
+export default withRouter(ViewBlog);

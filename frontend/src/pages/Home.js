@@ -43,7 +43,6 @@ class Home extends React.Component {
                 <Container>
                     <Row>
                         <Col>
-
                             <BlogList items={this.state.blogs}></BlogList>
                         </Col>
                     </Row>
