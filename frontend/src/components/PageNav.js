@@ -22,7 +22,7 @@ function PageNav(props) {
 
     return (<nav>
         <Navbar bg="primary" variant="dark">
-            <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+            <Navbar.Brand href="/">Home</Navbar.Brand>
             <Nav className="mr-auto">
                 {items} 
             </Nav>

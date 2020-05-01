@@ -20,7 +20,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            navItems: ["login", "new blog", "sign up", "home"]
+            navItems: [ "new blog"]
         }
     }
     render() {
@@ -34,15 +34,15 @@ class App extends React.Component {
                         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
                         <Switch>
-                            <Route path="/signup">
+                            {/* <Route path="/signup">
                                 <Signup />
-                            </Route>
+                            </Route> */}
                             <Route path="/home">
                                 <Home />
                             </Route>
-                            <Route path="/login">
+                            {/* <Route path="/login">
                                 <Login />
-                            </Route>
+                            </Route> */}
                             <Route path="/newblog">
                                 <ViewBlog id="" />
                             </Route>
@@ -50,7 +50,7 @@ class App extends React.Component {
                                 return <ViewBlog id={props.match.params.id}  />
                             }} />
                             <Route exact path="/">
-                                <Login />
+                                <Home />
                             </Route>
                         </Switch>
                     </div>
