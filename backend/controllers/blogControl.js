@@ -65,7 +65,7 @@ module.exports.blogEdit = function(req, res, next) {
             res.send("Blog not found refresh the page");
         } else {
             res.status = 200;
-            res.send(docs);
+            res.send("done");
         }
     });
 };

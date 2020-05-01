@@ -5,7 +5,7 @@ function BlogList(props) {
 
     let items = props.items.map((item, index) => {
         return <Link key={index} to={"/blog/"+item._id}>
-            <li  className="blog-list-item">
+            <li className="blog-list-item">
                 <img src={require("../images/defaultBlogImg.jpg")}></img>
 
                 <div>

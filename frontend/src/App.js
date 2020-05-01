@@ -44,10 +44,10 @@ class App extends React.Component {
                                 <Login />
                             </Route>
                             <Route path="/newblog">
-                                <ViewBlog title="" content="" summary="" />
+                                <ViewBlog id="" />
                             </Route>
                             <Route path="/blog/:id" render={(props) => {
-                                return <ViewBlog id={props.match.params.id} title="" content="" summary="" />
+                                return <ViewBlog id={props.match.params.id}  />
                             }} />
                             <Route exact path="/">
                                 <Login />
